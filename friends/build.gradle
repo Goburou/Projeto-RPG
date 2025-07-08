@@ -1,0 +1,50 @@
+plugins {
+	id 'java'
+	id 'org.springframework.boot' version '3.2.5'
+	id 'io.spring.dependency-management' version '1.1.4'
+	id 'org.hibernate.orm' version '6.4.4.Final'
+	id 'io.freefair.lombok' version '8.1.0'
+}
+
+group = 'com.rpgcompanion'
+version = '0.0.1-SNAPSHOT'
+
+java {
+	sourceCompatibility = '17'
+}
+
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+}
+
+repositories {
+	mavenCentral() // This is for your project's *dependencies*, not plugins
+}
+
+dependencies {
+	// Spring Boot Starters
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.springframework.boot:spring-boot-starter-validation'
+
+	// Banco de dados PostgreSQL
+	runtimeOnly 'org.postgresql:postgresql'
+
+	// Lombok (for automatic getters/setters/constructors)
+	// The io.freefair.lombok plugin usually adds these dependencies automatically,
+	// but explicitly declaring them is harmless and can sometimes be useful if
+	// you need a specific Lombok version that differs from the plugin's default.
+	// Ensure the version here is compatible with the plugin's version.
+	compileOnly 'org.projectlombok:lombok'
+	annotationProcessor 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
+
+	// Testes
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+}
+
+tasks.named('test') {
+	useJUnitPlatform()
+}
